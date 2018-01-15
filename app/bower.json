@@ -1,0 +1,20 @@
+{
+  "name": "dremio-battleship-demo",
+  "description": "A 'battleship' demo built on Dremio",
+  "main": "index.js",
+  "authors": [
+    "Christy Haragan"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/christyharagan/dremio-battleship-demo",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "chart-elements": "^3.1.3",
+    "socket.io-client": "^2.0.4"
+  }
+}

@@ -1,7 +1,7 @@
 Dremio Battleship Demo
 ==
 
-A take on the "battleships" game, show-casing [Dremio](www.dremio.com) creating queries across AWS and Azure.
+A take on the "battleships" game, show-casing [Dremio](http://www.dremio.com) creating queries across AWS and Azure.
 
 Set-up
 ==
@@ -23,7 +23,7 @@ This data will not change during the demo, so reflections can be set-up for this
 
 ### Premiums
 
-Sample data for this table can be found in [data/premiums.json](data/premiums.json). This data is expected to be found on a MySQL database. SQL for creating the appropriate table can be found at [sql/createPremiumsTable.sql](sql/createPremiumsTable.sql). For easy insertion of the data, run [sql/insertPremiumsData.sql](sql/insertPremiumsData.sql).
+Sample data for this table can be found in [data/premiums.csv](data/premiums.csv). This data is expected to be found on a MySQL database. SQL for creating the appropriate table can be found at [sql/createPremiumsTable.sql](sql/createPremiumsTable.sql). For easy insertion of the data, run [sql/insertPremiumsData.sql](sql/insertPremiumsData.sql).
 
 Once the data is inserted into MySQL, from Dremio, import the data source, then run SQL found at [sql/premiums.sql](sql/premiums.sql) to create the data-set. Ensure this data-set is saved under the user space. Note that would will need to change the "@christy" reference.
 
