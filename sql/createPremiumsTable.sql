@@ -1,0 +1,1 @@
+CREATE TABLE premiums (ship_id VARCHAR(10), value INTEGER, premium INTEGER);

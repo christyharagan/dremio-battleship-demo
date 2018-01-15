@@ -1,0 +1,544 @@
+<dom-module id="dremio-battleship-demo">
+    <style>
+        table,
+        th,
+        td {
+            padding: 1px;
+            border: 1px solid rgb(56, 60, 66);
+        }
+
+        td {
+            width: 20px;
+            height: 20px;
+            background-color: rgba(49, 201, 209, 0.3);
+        }
+
+        .footer-text {
+            font-family: "Lato", sans-serif;
+            font-size: 1.5em;
+            font-weight: 500;
+        }
+
+        .footer {
+            background-image: url('bg-2.jpg');
+            height: 600px;
+            background-size: cover;
+            background-position: 'center bottom';
+            background-repeat: 'no-repeat';
+        }
+
+        .flex-container {
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: row;
+        }
+
+        .row {
+            width: auto;
+        }
+
+        .flex-item {
+            padding: 5px;
+            margin: 10px;
+            text-align: center;
+            order: 1;
+        }
+
+        .chart {
+            font-family: "Open Sans", sans-serif;
+            font-weight: 300;
+            color: rgb(56, 60, 66)
+        }
+
+        .head-text {
+            font-family: 'Lato', sans-serif;
+            font-weight: 500;
+            color:white;
+        }
+
+        .headsplash {
+            position: relative;
+            display: block;
+            padding-bottom: 100px;
+            padding-top: 100px;
+        }
+
+        .headsplash:before {
+            display: block;
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-size: 100vw;
+            background-position: center top;
+            background-repeat: no-repeat
+        }
+
+
+
+        .headsplash.type-0,
+        .headsplash.type-1,
+        .headsplash.type-2,
+        .headsplash.type-3 {
+            background-color: #3e8bad;
+            background: -webkit-linear-gradient(295deg, #3e8bad 0%, #62d9df 50%, #f2f2f2 100%);
+            background: linear-gradient(155deg, #3e8bad 0%, #62d9df 50%, #f2f2f2 100%)
+        }
+
+        .headsplash.type-1 {
+            overflow: hidden
+        }
+
+        .headsplash.type-1:before {
+            background-image: url("connections.png");
+            background-position: right bottom;
+            top: 16%;
+            width: 100%;
+            background-size: contain;
+            -webkit-filter: grayscale(100%) brightness(320%);
+            filter: grayscale(100%) brightness(320%);
+            opacity: 1
+        }
+
+        .headsplash.type-1 .content h1:after,
+        .headsplash.type-1 .markdown h1:after {
+            display: block;
+            content: '';
+            position: absolute;
+            left: 50%;
+            width: 0.8em;
+            bottom: -0.5em;
+            height: 0.1em;
+            margin-left: -0.4em;
+            background: white
+        }
+
+        .icons {
+            float: left;
+            margin-left: 9vw;
+            margin-top: -1em !important
+        }
+
+        .content img,
+        .markdown img {
+            display: block;
+            max-width: 80%;
+            margin: 2em auto
+        }
+
+
+
+        .icons img {
+            width: 5.5em;
+            position: absolute
+        }
+
+        .float1 {
+            -webkit-animation: float 3s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
+            animation: float 3s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite
+        }
+
+        @-webkit-keyframes float {
+            50% {
+                -webkit-transform: translate(0, 0.5em);
+                transform: translate(0, 0.5em)
+            }
+        }
+
+        @keyframes float {
+            50% {
+                -webkit-transform: translate(0, 0.5em);
+                transform: translate(0, 0.5em)
+            }
+        }
+
+        @-webkit-keyframes float2 {
+            50% {
+                -webkit-transform: translate(0, -0.5em);
+                transform: translate(0, -0.5em)
+            }
+        }
+
+        @keyframes float2 {
+            50% {
+                -webkit-transform: translate(0, -0.5em);
+                transform: translate(0, -0.5em)
+            }
+        }
+
+        .float2 {
+            -webkit-animation: float2 5s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
+            animation: float2 5s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite
+        }
+
+
+        .icons img#ship {
+            margin-top: 10em
+        }
+
+        @media screen and (max-width: 739px) {
+            .icons {
+                display: none
+            }
+        }
+    </style>
+    <template>
+        <div class="headsplash type-1">
+            <div class="flex-container">
+                <div clas="flex-item" style="width:80px;height:120px">
+                    <img width="80px" src="battleshipicon.png" class="flex-item float1" id="ship" />
+                </div>
+                <div clas="flex-item" style="width:80px;height:120px">
+                    <img width="60px" src="dremio.png" class="flex-item float2" id="ship" />
+                </div>
+                <div class="flex-item">
+                    <h1 class="head-text">
+                        Battleships Demo</h1>
+                </div>
+            </div>
+        </div>
+        <div class="flex-container" style="padding-bottom:60px; padding-top:60px;">
+            <div class="row">
+                <chart-bar class="flex-item chart" id="chartPremiums" class="rectangular-chart" data="[[dataPremiums]]" options="[[chartOptions]]"></chart-bar>
+                <chart-line class="flex-item chart" id="chartCapital" class="rectangular-chart" data="[[dataCapital]]" options="[[lineChartOptions]]"></chart-line>
+                <chart-line class="flex-item chart" id="chartRisk" class="rectangular-chart" data="[[dataRisk]]" options="[[lineChartOptions]]"></chart-line>
+            </div>
+        </div>
+        <div class="flex-container" style="background-color: rgba(56, 60, 66, 0.8)">
+            <div class="row">
+                <table class="flex-item" style="background-color: white; padding: 1px">
+                    <tr>
+                        <td id="c11" onclick="shoot(1,1)"></td>
+                        <td id="c21" onclick="shoot(2,1)"></td>
+                        <td id="c31" onclick="shoot(3,1)"></td>
+                        <td id="c41" onclick="shoot(4,1)"></td>
+                        <td id="c51" onclick="shoot(5,1)"></td>
+                        <td id="c61" onclick="shoot(6,1)"></td>
+                        <td id="c71" onclick="shoot(7,1)"></td>
+                        <td id="c81" onclick="shoot(8,1)"></td>
+                    </tr>
+                    <tr>
+                        <td id="c12" onclick="shoot(1,2)"></td>
+                        <td id="c22" onclick="shoot(2,2)"></td>
+                        <td id="c32" onclick="shoot(3,2)"></td>
+                        <td id="c42" onclick="shoot(4,2)"></td>
+                        <td id="c52" onclick="shoot(5,2)"></td>
+                        <td id="c62" onclick="shoot(6,2)"></td>
+                        <td id="c72" onclick="shoot(7,2)"></td>
+                        <td id="c82" onclick="shoot(8,2)"></td>
+                    </tr>
+                    <tr>
+                        <td id="c13" onclick="shoot(1,3)"></td>
+                        <td id="c23" onclick="shoot(2,3)"></td>
+                        <td id="c33" onclick="shoot(3,3)"></td>
+                        <td id="c43" onclick="shoot(4,3)"></td>
+                        <td id="c53" onclick="shoot(5,3)"></td>
+                        <td id="c63" onclick="shoot(6,3)"></td>
+                        <td id="c73" onclick="shoot(7,3)"></td>
+                        <td id="c83" onclick="shoot(8,3)"></td>
+                    </tr>
+                    <tr>
+                        <td id="c14" onclick="shoot(1,4)"></td>
+                        <td id="c24" onclick="shoot(2,4)"></td>
+                        <td id="c34" onclick="shoot(3,4)"></td>
+                        <td id="c44" onclick="shoot(4,4)"></td>
+                        <td id="c54" onclick="shoot(5,4)"></td>
+                        <td id="c64" onclick="shoot(6,4)"></td>
+                        <td id="c74" onclick="shoot(7,4)"></td>
+                        <td id="c84" onclick="shoot(8,4)"></td>
+                    </tr>
+                    <tr>
+                        <td id="c15" onclick="shoot(1,5)"></td>
+                        <td id="c25" onclick="shoot(2,5)"></td>
+                        <td id="c35" onclick="shoot(3,5)"></td>
+                        <td id="c45" onclick="shoot(4,5)"></td>
+                        <td id="c55" onclick="shoot(5,5)"></td>
+                        <td id="c65" onclick="shoot(6,5)"></td>
+                        <td id="c75" onclick="shoot(7,5)"></td>
+                        <td id="c85" onclick="shoot(8,5)"></td>
+                    </tr>
+                    <tr>
+                        <td id="c16" onclick="shoot(1,6)"></td>
+                        <td id="c26" onclick="shoot(2,6)"></td>
+                        <td id="c36" onclick="shoot(3,6)"></td>
+                        <td id="c46" onclick="shoot(4,6)"></td>
+                        <td id="c56" onclick="shoot(5,6)"></td>
+                        <td id="c66" onclick="shoot(6,6)"></td>
+                        <td id="c76" onclick="shoot(7,6)"></td>
+                        <td id="c86" onclick="shoot(8,6)"></td>
+                    </tr>
+                    <tr>
+                        <td id="c17" onclick="shoot(1,7)"></td>
+                        <td id="c27" onclick="shoot(2,7)"></td>
+                        <td id="c37" onclick="shoot(3,7)"></td>
+                        <td id="c47" onclick="shoot(4,7)"></td>
+                        <td id="c57" onclick="shoot(5,7)"></td>
+                        <td id="c67" onclick="shoot(6,7)"></td>
+                        <td id="c77" onclick="shoot(7,7)"></td>
+                        <td id="c87" onclick="shoot(8,7)"></td>
+                    </tr>
+                    <tr>
+                        <td id="c18" onclick="shoot(1,8)"></td>
+                        <td id="c28" onclick="shoot(2,8)"></td>
+                        <td id="c38" onclick="shoot(3,8)"></td>
+                        <td id="c48" onclick="shoot(4,8)"></td>
+                        <td id="c58" onclick="shoot(5,8)"></td>
+                        <td id="c68" onclick="shoot(6,8)"></td>
+                        <td id="c78" onclick="shoot(7,8)"></td>
+                        <td id="c88" onclick="shoot(8,8)"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="flex-container" style="height:100px"></div>
+        <div class="flex-container footer">
+            <div class="row">
+                <div class="flex-item footer-text">Source code available on
+                    <a href="https://github.com/christyharagan/dremio-battleship-demo" style="color: white">github</a>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        var scope
+        var totalCapital = 0
+        var totalRisk = 0
+
+        var loadedShotHistory = false
+        var shotBuffer = []
+        var socket = io('http://' + location.hostname + ':' + location.port);
+        var numberOfShots = 0
+        socket.on('shot', function (shot) {
+            if (loadedShotHistory) {
+                addShot(shot)
+            } else {
+                shotBuffer.push(shot)
+            }
+        })
+
+        function getResource(name, cb) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.overrideMimeType("application/json");
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+                    if (xmlhttp.status == 200) {
+                        var response = JSON.parse(xmlhttp.responseText)
+                        cb(response)
+                    }
+                }
+            }
+
+            xmlhttp.open("GET", "/" + name)
+            xmlhttp.setRequestHeader("Content-Type", "application/json")
+            xmlhttp.send()
+        }
+
+        function getPremiums(cb) {
+            getResource('premiums', cb)
+        }
+
+        function getShots(cb) {
+            getResource('shots', cb)
+        }
+
+        function addShot(response) {
+            if (response.shot_id >= numberOfShots) {
+                numberOfShots++
+
+                var backgroundColor
+
+                if (response.cost > 0) {
+                    backgroundColor = '#000000'
+
+                    totalCapital -= response.cost
+                } else {
+                    var g = Math.round(255 - response.risk / 0.1 * 255).toString(16)
+                    if (g.length == 1) {
+                        g = '0' + g
+                    }
+                    backgroundColor = '#FF' + g + '00'
+
+                    totalRisk += response.risk
+                }
+                scope.$['c' + response.x + response.y].style['background-color'] = backgroundColor
+
+                addData('dataCapital', totalCapital)
+                addData('dataRisk', totalRisk)
+            }
+        }
+
+        function shoot(x, y) {
+            socket.emit('shoot', { x: x, y: y });
+        }
+
+        function addData(chartData, value) {
+            var data = scope[chartData].datasets[0].data
+            if (data.length == 10) {
+                data.splice(0, 1)
+            }
+            data.push(value)
+
+            scope.set(chartData + '.datasets[0].data', scope[chartData].datasets[0].data)
+            if (chartData == 'dataCapital') {
+                scope.$.chartCapital.updateChart()
+            } else if (chartData == 'dataRisk') {
+                scope.$.chartRisk.updateChart()
+            }
+        }
+
+        Polymer({
+            is: "dremio-battleship-demo",
+
+            ready: function () {
+                scope = this
+
+                scope.chartOptions = {
+                    legend: {
+                        labels: {
+                            fontFamily: '"Open Sans", sans-serif',
+                            fontWeight: 300,
+                            fontColor: 'rgb(56, 60, 66)'
+                        }
+                    },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                fontFamily: '"Open Sans", sans-serif',
+                                fontWeight: 300,
+                                fontColor: 'rgb(56, 60, 66)'
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                fontFamily: '"Open Sans", sans-serif',
+                                fontWeight: 300,
+                                fontColor: 'rgb(56, 60, 66)'
+                            }
+                        }]
+                    }
+                }
+
+                scope.lineChartOptions = {
+                    legend: {
+                        labels: {
+                            fontFamily: '"Open Sans", sans-serif',
+                            fontWeight: 300,
+                            fontColor: 'rgb(56, 60, 66)'
+                        }
+                    },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                fontFamily: '"Open Sans", sans-serif',
+                                fontWeight: 300,
+                                fontColor: 'rgb(56, 60, 66)',
+                                fontSize: 0
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                fontFamily: '"Open Sans", sans-serif',
+                                fontWeight: 300,
+                                fontColor: 'rgb(56, 60, 66)'
+                            }
+                        }]
+                    }
+                }
+
+                scope.dataPremiums = {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: "Premium",
+                            backgroundColor: "rgba(56, 60, 66,0.2)",
+                            borderColor: "rgb(56, 60, 66)",
+                            borderWidth: 1,
+                            data: []
+                        },
+                        {
+                            label: "Value",
+                            backgroundColor: "rgb(49, 201, 209)",//"rgba(151,187,205,0.2)",
+                            borderColor: "rgb(56, 60, 66)",
+                            borderWidth: 1,
+                            data: []
+                        }
+                    ]
+                };
+
+                scope.dataCapital = {
+                    labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                    datasets: [
+                        {
+                            label: "Total Capital",
+                            backgroundColor: "rgba(220,220,220,0.2)",
+                            borderColor: "rgb(56, 60, 66)",
+                            borderWidth: 1,
+                            pointBackgroundColor: "rgb(56, 60, 66)",
+                            pointBorderColor: "#fff",
+                            pointHoverBackgroundColor: "#fff",
+                            pointHoverBorderColor: "rgba(220,220,220,1)",
+                            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                        }
+                    ]
+                }
+                scope.dataRisk = {
+                    labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                    datasets: [
+                        {
+                            label: "Total Risk",
+                            backgroundColor: "rgba(220,220,220,0.2)",
+                            borderColor: "rgb(56, 60, 66)",
+                            borderWidth: 1,
+                            pointBackgroundColor: "rgb(56, 60, 66)",
+                            pointBorderColor: "#fff",
+                            pointHoverBackgroundColor: "#fff",
+                            pointHoverBorderColor: "rgba(220,220,220,1)",
+                            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                        }
+                    ]
+                }
+            },
+            attached: function () {
+                getPremiums(function (premiums) {
+                    premiums.map(function (premium) {
+                        totalCapital += premium.premium
+                        scope.dataPremiums.labels.push(premium.ship_id)
+                        scope.dataPremiums.datasets[0].data.push(premium.premium)
+                        scope.dataPremiums.datasets[1].data.push(premium.value)
+                    })
+                    addData('dataCapital', totalCapital)
+
+                    scope.$.chartPremiums.updateChart()
+
+                    setTimeout(function () {
+                        getShots(function (shots) {
+                            shots.map(function (shot) {
+                                addShot(shot)
+                            })
+                            loadedShotHistory = true
+                            shotBuffer.forEach(function (shot) {
+                                addShot(shot)
+                            })
+                        })
+                    }, 200)
+                })
+            },
+            attributeChanged: function (name, type) {
+                console.log(name)
+                console.log(type)
+            }
+        });
+    </script>
+
+</dom-module>

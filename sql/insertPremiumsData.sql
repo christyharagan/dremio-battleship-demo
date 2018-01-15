@@ -1,0 +1,1 @@
+INSERT INTO premiums (ship_id, value, premium) VALUES ('ship1',10000,1000),('ship2',5000,200),('ship3',15000,2500),('ship4',20000,5000)

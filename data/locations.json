@@ -1,0 +1,38 @@
+[
+    {
+        "id": "ship1",
+        "centre": [
+            5,
+            4
+        ],
+        "length": 3,
+        "orientation": "y"
+    },
+    {
+        "id": "ship2",
+        "centre": [
+            1,
+            2
+        ],
+        "length": 1,
+        "orientation": "x"
+    },
+    {
+        "id": "ship3",
+        "centre": [
+            2,
+            5
+        ],
+        "length": 3,
+        "orientation": "x"
+    },
+    {
+        "id": "ship4",
+        "centre": [
+            7,
+            9
+        ],
+        "length": 5,
+        "orientation": "x"
+    }
+]

@@ -1,0 +1,16 @@
+{
+  "name": "dremio-battleship-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": {
+    "name": "Christy Haragan",
+    "email": "christy.haragan.github@gmail.com",
+    "url": "https://github.com/christyharagan"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/christyharagan/dremio-battleship-demo.git"
+  },
+  "description": "A 'battleship' demo built on Dremio"
+}
